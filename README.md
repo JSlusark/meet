@@ -1,0 +1,88 @@
+# MEET APP
+
+## Features, User Stories and BDD Scenarios.
+
+### FEATURE 1: FILTER EVENTS BY CITY
+As a user I should be able to "filter events by city", so that I can see the list of events that take place in that city.
+
+ Scenario 1: When user hasn't searched for a city, show upcoming events from all cities. 
+
+-   Given user hasn't searched for any city
+
+-   When the user opens the app
+
+-   Then the user should see a list of all upcoming events
+
+Scenario 2: User should see a list of suggestions when they search for a city.
+
+-   Given the main page is open
+
+-   When user starts typing in the city textbox
+
+-   Then the user should see a list of cities (suggestions) that match what they've typed
+Scenario 3: User can select a city from the suggested list.
+
+-   Given the user was typing "Berlin" in the city textbox And the list of suggested cities is showing When the user selects a city (e.g., "Berlin, Germany") from the list
+    Then their city should be changed to that city (i.e., "Berlin, Germany")
+    And the user should receive a list of upcoming events in that city
+
+### FEATURE 2: SHOW/HIDE AN EVENT'S DETAILS
+As a user, I should be able to see see/hide event details so that I can better navigate throughout the various event and get information on the ones I want to know more about.
+
+Scenario 1: Events are displayed in a condensed format by default
+
+-   Given that the user initiates a search for events occurring in their local area
+
+-   When the resulting events are displayed
+
+-   Then these events are presented in a collapsed format by default
+
+Scenario 2: The user can unfold an event to view its full details
+
+-   Given the event search results for a specific area 
+
+-   When the user selects "show details" for a specific event
+
+-   Then the selected event's details will be fully displayed, spanning the entirety of the page
+
+Scenario 3: The user can fold an event to conceal its details
+
+-   Given that the user is viewing the expanded details of a specific event
+
+-   When the user selects the "hide details" button
+
+-   Then the expanded event details will be collapsed, returning the display to the original, condensed event format
+
+### FEATURE 3: SPECIFY NUMBER OF EVENTS
+As a user, I should be able to specify the number of events loaded on the page so to facilitate smoother navigation within the app.
+
+-   Scenario 1: When user hasn't specified a number, 32 is the default number
+    - Given that the events are prepared for display on the page
+    - When the user doesn't specify the desired number of events to view
+    - Then the app will automatically load 32 events
+
+-   Scenario 2: User can change the number of events they want to see
+    - Given that the user initiates a search for local event
+    - When the user initiates the event loading process
+    - Then the user will have the opportunity to specify the quantity of events they wish to have displayed
+
+### FEATURE 4: USE THE APP WHEN OFFLINE
+As a user, I should be able to use the app even while offline, ensuring I stay informed about the events I was viewing while I was online.
+
+-   Scenario 1: Show cached data when there's no internet connection.
+    - Given the situation where an internet connection is not present
+    - Then the user is navigating the app
+    - Then the app will display the cached data
+
+-   Scenario 2: Show error when user changes the settings (city, time range)
+    - Given the situation where an internet connection is not available
+    - When the user attempts to modify their search parameters (based on city or event date/time)
+    - Then the app will display an error message, notifying the user that this action is not possible due to the lack of an internet connection
+
+### FEATURE 5: DATA VISUALIZATION
+As a user, I should be able to visualize data from the app so that I can understand the amount of upcoming events occurring in a particular city and be able to filter by event type.
+
+-   Scenario 1: Show a chart with the number of upcoming events in each city
+    - Given that the app is loaded
+    - When the user views the event listings
+    - Then the app will display a chart that indicates the quantity of upcoming events in each city, categorized by topic.
