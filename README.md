@@ -86,3 +86,30 @@ As a user, I should be able to visualize data from the app so that I can underst
     - Given that the app is loaded
     - When the user views the event listings
     - Then the app will display a chart that indicates the quantity of upcoming events in each city, categorized by topic.
+
+## Frontend:
+Written with JavaScript/React; hosted on Github Pages
+
+## Backend:
+Written with Node/Express and Lambda finctions (FaaS); hosted on AWS
+
+## Backend (DataBase):
+Google Calendar API
+
+## How this app uses serverless functions:
+In the Meet app, serverless functions written in Node.js and Express will handle the backend logic. Hosted on AWS Lambda, these functions will communicate with the Google Calendar API to fetch event data based on user requests. This approach ensures scalability, cost optimization, and streamlined development for a smooth user experience.
+
+### FEATURE 1: FILTER EVENTS BY CITY
+Serverless functions will help users filter events by city. When users open the app, the serverless function will display a list of all upcoming events. As users type in the city textbox, the serverless function will show suggestions that match their input. When users select a city from the suggestion list, the serverless function will update the city and show a list of upcoming events in that selected city.
+
+### FEATURE 2: SHOW/HIDE AN EVENT'S DETAILS
+Serverless functions will handle displaying and hiding event details. By default, events will be shown in a condensed format. When users choose to view event details, the serverless function will expand and display the full information. If users want to hide the details, the serverless function will collapse the event to its condensed format.
+
+### FEATURE 3: SPECIFY NUMBER OF EVENTS
+Serverless functions will allow users to specify the number of events to be loaded on the page. The default number of events displayed will be 32. When users initiate the event loading process, the serverless function will provide an option for users to specify the desired quantity of events they want to see.
+
+### FEATURE 4: USE THE APP WHEN OFFLINE
+Serverless functions will enable offline app usage. When there is no internet connection, the serverless function will display cached data, allowing users to navigate and view the previously accessed information. If users attempt to modify search parameters without an internet connection, the serverless function will show an error message indicating that this action is not possible without an internet connection.
+
+### FEATURE 5: DATA VISUALIZATION
+Serverless functions will support data visualization in the Meet app. The app will display a chart that shows the number of upcoming events in each city, categorized by topic. This visual representation helps users understand and explore event quantities in different cities.
