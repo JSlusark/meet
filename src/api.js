@@ -4,21 +4,26 @@ import { mockData } from "./mock-data";
 import axios from "axios";
 import NProgress from "nprogress";
 
-/**
- *
- * @param {*} events:
- * The following function should be in the “api.js” file.
- * This function takes an events array, then uses map to create a new array with only locations.
- * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
- * The Set will remove all duplicates from the array.
- */
-export const extractLocations = (events) => {
-	var extractLocations = events.map((event) => event.location);
-	var locations = [...new Set(extractLocations)];
-	return locations;
+export const getAccessToken = async () => {
+	const accessToken = localStorage.getItem("access_token");
+	const tokenCheck = accessToken && (await checkToken(accessToken));
+	if (!accessToken || tokenCheck.error) {
+		await localStorage.removeItem("access_token");
+		const searchParams = new URLSearchParams(window.location.search);
+		const code = await searchParams.get("code");
+		if (!code) {
+			const results = await axios.get(
+				"https://bu80ucml81.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
+			);
+			const { authUrl } = results.data;
+			return (window.location.href = authUrl);
+		}
+		return code && getToken(code);
+	}
+	return accessToken;
 };
 
-const checkToken = async (accessToken) => {
+export const checkToken = async (accessToken) => {
 	const result = await fetch(
 		`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
 	)
@@ -35,12 +40,28 @@ export const getEvents = async () => {
 		NProgress.done();
 		return mockData;
 	}
+	//Access local storage when user offline
+	if (!navigator.onLine) {
+		const data = localStorage.getItem("lastEvents");
+		NProgress.done();
+		console.log("offline data: ", data);
+		return data ? JSON.parse(data).events : [];
+	}
+
+	if (!navigator.onLine) {
+		const data = localStorage.getItem("lastEvents");
+		NProgress.done();
+		return data ? JSON.parse(data).events : [];
+	}
 
 	const token = await getAccessToken();
 
 	if (token) {
 		removeQuery();
-		const url = "YOUR_GET_EVENTS_API_ENDPOINT" + "/" + token;
+		const url =
+			"https://bu80ucml81.execute-api.us-east-2.amazonaws.com/dev/api/get-events" +
+			"/" +
+			token;
 		const result = await axios.get(url);
 		if (result.data) {
 			var locations = extractLocations(result.data.events);
@@ -67,35 +88,26 @@ const removeQuery = () => {
 };
 
 const getToken = async (code) => {
-	const encodeCode = encodeURIComponent(code);
-	const { access_token } = await fetch(
-		"https://c1om21r5w7.execute-api.eu-central-1.amazonaws.com/dev/api/token" +
-			"/" +
-			encodeCode
-	)
-		.then((res) => {
-			return res.json();
-		})
-		.catch((error) => error);
-
-	access_token && localStorage.setItem("access_token", access_token);
-
-	return access_token;
+	try {
+		const encodeCode = encodeURIComponent(code);
+		const response = await fetch(
+			"https://c1om21r5w7.execute-api.eu-central-1.amazonaws.com/dev/api/token" +
+				"/" +
+				encodeCode
+		);
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		const { access_token } = await response.json();
+		access_token && localStorage.setItem("access_token", access_token);
+		return access_token;
+	} catch (error) {
+		error.json();
+	}
 };
 
-export const getAccessToken = async () => {
-	const accessToken = localStorage.getItem("access_token");
-	const tokenCheck = accessToken && (await checkToken(accessToken));
-	if (!accessToken || tokenCheck.error) {
-		await localStorage.removeItem("access_token");
-		const searchParams = new URLSearchParams(window.location.search);
-		const code = await searchParams.get("code");
-		if (!code) {
-			const results = await axios.get("YOUR_SERVERLESS_GET_AUTH_URL_ENDPOINT");
-			const { authUrl } = results.data;
-			return (window.location.href = authUrl);
-		}
-		return code && getToken(code);
-	}
-	return accessToken;
+export const extractLocations = (events) => {
+	var extractLocations = events.map((event) => event.location);
+	var locations = [...new Set(extractLocations)];
+	return locations;
 };
