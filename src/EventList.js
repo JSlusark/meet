@@ -1,3 +1,5 @@
+//src/EventList.js
+
 import React, { Component } from "react";
 import Event from "./Event";
 
@@ -7,7 +9,10 @@ class EventList extends Component {
 		return (
 			<ul className="EventList">
 				{events.map((event) => (
-					<li key={event.id}>
+					<li
+						className="EventList-item"
+						key={event.id}
+					>
 						<Event event={event} />
 					</li>
 				))}
