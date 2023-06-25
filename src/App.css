@@ -58,8 +58,8 @@ p {
 }
 
 .suggestions {
-	left: 37px;
-	top: 38px;
+	left: 38px;
+	top: 59px;
 }
 
 input[type="text"],
@@ -172,8 +172,13 @@ input[type="number"] {
 }
 
 .Alert {
-	position: fixed;
-	top: 20px;
+	position: relative;
+	font-size: 10px;
+	margin-left: 39px;
+}
+
+.errorMessage {
+	font-size: 100px;
 }
 
 .data-vis-wrapper {

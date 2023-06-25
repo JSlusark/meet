@@ -20,8 +20,7 @@ class CitySearch extends Component {
 				query: value,
 				suggestions: [],
 				showSuggestions: false,
-				infoText:
-					"We cannot find the city you are looking for. Please try another city",
+				infoText: " ⚠️Type a valid city name",
 			});
 		} else {
 			console.log("yes city " + suggestions + " " + value);
@@ -58,6 +57,7 @@ class CitySearch extends Component {
 						}}
 					/>
 				</div>
+
 				<ul
 					className="suggestions"
 					style={this.state.showSuggestions ? {} : { display: "none" }}

@@ -24,7 +24,7 @@ class EventNumber extends Component {
 		if (value < 1 || value > 32) {
 			this.setState({
 				query: value,
-				errorText: "Please enter a valid number",
+				errorText: "⚠️Enter a value between 1 and 32",
 			});
 		}
 	};
@@ -32,6 +32,10 @@ class EventNumber extends Component {
 	render() {
 		return (
 			<div className="number-of-events">
+				<ErrorAlert
+					className="errorMessage"
+					text={this.state.errorText}
+				/>
 				<label className="number-of-events-label">Number of Events: </label>
 				<input
 					type="number"
@@ -40,10 +44,6 @@ class EventNumber extends Component {
 					max={32}
 					value={this.state.query}
 					onChange={this.handleInputChanged}
-				/>
-				<ErrorAlert
-					className="errorMessage"
-					text={this.state.errorText}
 				/>
 			</div>
 		);
