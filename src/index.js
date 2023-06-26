@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import * as atatus from "atatus-spa";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
-atatus.config("07617f677b0c4d769b0a7c576ba20e71").install();
+import reportWebVitals from "./reportWebVitals";
+import * as atatus from "atatus-spa";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -23,3 +22,5 @@ serviceWorkerRegistration.register();
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+atatus.config("07617f677b0c4d769b0a7c576ba20e71").install();
