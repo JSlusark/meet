@@ -15,7 +15,7 @@ class App extends Component {
 		locations: [],
 		selectedLocation: "all",
 		eventCount: 32,
-		warningText: "",
+		offlineAlert: "",
 	};
 
 	componentDidMount() {
@@ -67,17 +67,23 @@ class App extends Component {
 				});
 			});
 		}
+		if (!navigator.onLine) {
+			this.setState({
+				offlineAlert:
+					"🔌 You are currently Offline. The list of events may not be up to date!",
+			});
+		} else {
+			this.setState({
+				offlineAlert: "",
+			});
+		}
 	};
 
 	render() {
-		const offlineMessage = navigator.onLine
-			? ""
-			: "You are currently Offline. The list of events may not be up to date";
-
 		return (
 			<div className="App">
 				<div className="offlineAlert">
-					<OfflineAlert text={offlineMessage} />
+					<OfflineAlert text={this.state.offlineAlert} />
 				</div>
 				<div className="SearchBar">
 					<CitySearch
