@@ -5,7 +5,7 @@ import "./App.css";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import EventNumber from "./EventNumber";
-import { InfoAlert } from "./Alert";
+import { OfflineAlert } from "./Alert";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
 
@@ -15,6 +15,7 @@ class App extends Component {
 		locations: [],
 		selectedLocation: "all",
 		eventCount: 32,
+		warningText: "",
 	};
 
 	componentDidMount() {
@@ -40,63 +41,44 @@ class App extends Component {
 	}
 
 	updateEvents = (location, eventCount) => {
-		console.log(location, eventCount);
-		if (!eventCount) {
+		const { numberOfEvents, selectedLocation } = this.state;
+		if (location) {
 			getEvents().then((events) => {
 				const locationEvents =
 					location === "all"
 						? events
 						: events.filter((event) => event.location === location);
-				const shownEvents = locationEvents.slice(0, this.state.eventCount);
+				const eventsToShow = locationEvents.slice(0, numberOfEvents);
 				this.setState({
-					events: shownEvents,
-					selectedCity: location,
-				});
-			});
-		} else if (eventCount && !location) {
-			getEvents().then((events) => {
-				const locationEvents =
-					this.state.selectedCity === undefined ||
-					this.state.selectedCity === "all"
-						? events
-						: events.filter(
-								(event) => this.state.selectedCity === event.location
-						  );
-				const shownEvents = locationEvents.slice(0, eventCount);
-				this.setState({
-					events: shownEvents,
-					eventCount: eventCount,
-				});
-			});
-		} else if (this.state.selectedCity === "all") {
-			getEvents().then((events) => {
-				const locationEvents = events;
-				const shownEvents = locationEvents.slice(0, eventCount);
-				this.setState({
-					events: shownEvents,
-					eventCount: eventCount,
+					events: eventsToShow,
+					selectedLocation: location,
 				});
 			});
 		} else {
 			getEvents().then((events) => {
 				const locationEvents =
-					this.state.locations === "all"
+					selectedLocation === "all"
 						? events
-						: events.filter(
-								(event) => this.state.selectedCity === event.location
-						  );
-				const shownEvents = locationEvents.slice(0, eventCount);
+						: events.filter((event) => event.location === selectedLocation);
+				const eventsToShow = locationEvents.slice(0, eventCount);
 				this.setState({
-					events: shownEvents,
-					eventCount: eventCount,
+					events: eventsToShow,
+					numberOfEvents: eventCount,
 				});
 			});
 		}
 	};
 
 	render() {
+		const offlineMessage = navigator.onLine
+			? ""
+			: "You are currently Offline. The list of events may not be up to date";
+
 		return (
 			<div className="App">
+				<div className="offlineAlert">
+					<OfflineAlert text={offlineMessage} />
+				</div>
 				<div className="SearchBar">
 					<CitySearch
 						locations={this.state.locations}

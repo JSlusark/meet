@@ -177,8 +177,8 @@ input[type="number"] {
 	margin-left: 39px;
 }
 
-.errorMessage {
-	font-size: 100px;
+.offlineAlert {
+	text-align: left;
 }
 
 .data-vis-wrapper {

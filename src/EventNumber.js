@@ -1,7 +1,7 @@
 //src/EventNumber.js
 
 import React, { Component } from "react";
-import { ErrorAlert } from "./Alert";
+import { EventNumeberAlert } from "./Alert";
 
 class EventNumber extends Component {
 	constructor() {
@@ -32,10 +32,7 @@ class EventNumber extends Component {
 	render() {
 		return (
 			<div className="number-of-events">
-				<ErrorAlert
-					className="errorMessage"
-					text={this.state.errorText}
-				/>
+				<EventNumeberAlert text={this.state.errorText} />
 				<label className="number-of-events-label">Number of Events: </label>
 				<input
 					type="number"

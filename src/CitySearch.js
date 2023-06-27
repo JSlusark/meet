@@ -1,6 +1,6 @@
 // src/CitySearch.js
 import React, { Component, component } from "react";
-import { InfoAlert } from "./Alert";
+import { CityAlert } from "./Alert";
 class CitySearch extends Component {
 	state = {
 		query: "",
@@ -45,7 +45,7 @@ class CitySearch extends Component {
 		return (
 			<div className="CitySearch">
 				<div>
-					<InfoAlert text={this.state.infoText} />
+					<CityAlert text={this.state.infoText} />
 					<label className="city-label">City: </label>
 					<input
 						type="text"
