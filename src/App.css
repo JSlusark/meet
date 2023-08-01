@@ -246,6 +246,17 @@ input[type="number"] {
 	font-family: "Roboto";
 }
 
+.chartsContainer {
+	display: flex; /* Use Flexbox */
+	justify-content: space-between; /* Optional: Adjust alignment between charts */
+	flex-wrap: wrap; /* Optional: Allow charts to wrap to a new row if necessary */
+}
+
+.chartItem {
+	flex-basis: 48%; /* Adjust the width of each chart item as needed */
+	margin-bottom: 20px; /* Optional: Add some margin between the charts */
+}
+
 @media only screen and (min-width: 992px) {
 	.data-vis-wrapper {
 		flex-direction: row;

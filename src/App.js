@@ -5,6 +5,8 @@ import "./App.css";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import EventNumber from "./EventNumber";
+import CityEventsChart from "./CityEventsChart";
+import EventGenresChart from "./EventGenresChart";
 import { OfflineAlert } from "./Alert";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
@@ -82,9 +84,24 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<h1>Meet App</h1>
 				<div className="offlineAlert">
 					<OfflineAlert text={this.state.offlineAlert} />
 				</div>
+				<div className="chartsContainer">
+					<div className="chartItem">
+						<h3>Total events per city</h3>
+						<CityEventsChart
+							allLocations={this.state.locations}
+							events={this.state.events}
+						/>
+					</div>
+					<div className="chartItem">
+						<h3>Total events per genre</h3>
+						<EventGenresChart events={this.state.events} />
+					</div>
+				</div>
+				<h2>Search your event:</h2>
 				<div className="SearchBar">
 					<CitySearch
 						locations={this.state.locations}
