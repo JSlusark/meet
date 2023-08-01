@@ -22,6 +22,7 @@ class App extends Component {
 	};
 
 	componentDidMount() {
+		console.log("updated at 15:11");
 		this.mounted = true;
 		getEvents().then((events) => {
 			if (this.mounted) {
