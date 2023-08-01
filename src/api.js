@@ -8,9 +8,9 @@ export const getAccessToken = async () => {
 	const accessToken = localStorage.getItem("access_token");
 	const tokenCheck = accessToken && (await checkToken(accessToken));
 	if (!accessToken || tokenCheck.error) {
-		await localStorage.removeItem("access_token");
+		localStorage.removeItem("access_token");
 		const searchParams = new URLSearchParams(window.location.search);
-		const code = await searchParams.get("code");
+		const code = searchParams.get("code");
 		if (!code) {
 			const results = await axios.get(
 				"https://c1om21r5w7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
@@ -45,12 +45,6 @@ export const getEvents = async () => {
 		const data = localStorage.getItem("lastEvents");
 		NProgress.done();
 		console.log("offline data: ", data);
-		return data ? JSON.parse(data).events : [];
-	}
-
-	if (!navigator.onLine) {
-		const data = localStorage.getItem("lastEvents");
-		NProgress.done();
 		return data ? JSON.parse(data).events : [];
 	}
 

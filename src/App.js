@@ -1,6 +1,7 @@
 // src/App.js
 
 import React, { Component } from "react";
+import _ from "lodash";
 import "./App.css";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
@@ -25,7 +26,7 @@ class App extends Component {
 		getEvents().then((events) => {
 			if (this.mounted) {
 				this.setState({
-					events: events.slice(0, this.state.eventCount),
+					events: _.shuffle(events).slice(0, this.state.eventCount),
 					locations: extractLocations(events),
 				});
 			}
