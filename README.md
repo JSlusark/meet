@@ -1,115 +1,102 @@
-# MEET APP
+# **Meet App - Documentation**
+The Meet App is a single-page, responsive web application that allows users to search for a city and get a list of events for Full-Stack Developers hosted in that city. The application is designed to provide users with an easy way to discover upcoming events and stay informed about events they are interested in attending. You can access the app here.
 
-## Features, User Stories and BDD Scenarios.
+## **Technologies Used**
+The Meet App is made with the following technologies:
 
-### FEATURE 1: FILTER EVENTS BY CITY
-As a user I should be able to "filter events by city", so that I can see the list of events that take place in that city.
+- **Frontend:** JavaScript, React, Create-React-App (CRA), CSS, JestCucumber, Puppeter, Atatus, Lighthouse, Recharts
+- **Backend:** Node.js, Express, AWS Lambda functions (FaaS)
+- **Database:** Google Calendar API
 
- Scenario 1: When user hasn't searched for a city, show upcoming events from all cities. 
+## **Features, User Stories, and BDD Scenarios**
+**Feature 1: Filter Events by City** <br>
+*As a user, I should be able to filter events by city, so that I can see the list of events that take place in that city.* <br>
 
--   Given user hasn't searched for any city
+Scenario 1:<br> When the user hasn't searched for a city, show upcoming events from all cities.<br>
+> Given user hasn't searched for any city <br>
+When the user opens the app <br>
+Then the user should see a list of all upcoming events <br>
 
--   When the user opens the app
+Scenario 2:<br> User should see a list of suggestions when they search for a city.<br>
+>Given the main page is open <br>
+When the user starts typing in the city textbox<br>
+Then the user should see a list of cities (suggestions) that match what they've typed<br>
 
--   Then the user should see a list of all upcoming events
+Scenario 3:<br> User can select a city from the suggested list.<br>
 
-Scenario 2: User should see a list of suggestions when they search for a city.
+>Given the user was typing "Berlin" in the city textbox<br>
+And the list of suggested cities is showing<br>
+When the user selects a city (e.g., "Berlin, Germany") from the list<br>
+Then their city should be changed to that city (i.e., "Berlin, Germany")<br>
+And the user should receive a list of upcoming events in that city<br>
 
--   Given the main page is open
+Feature 2:<br> Show/Hide an Event's Details<br>
+As a user, I should be able to see/hide event details so that I can better navigate throughout the various events and get information on the ones I want to know more about.
 
--   When user starts typing in the city textbox
+Scenario 1:<br> Events are displayed in a condensed format by default<br>
 
--   Then the user should see a list of cities (suggestions) that match what they've typed
-Scenario 3: User can select a city from the suggested list.
+>Given that the user initiates a search for events occurring in their local area<br>
+When the resulting events are displayed<br>
+Then these events are presented in a collapsed format by default<br>
 
--   Given the user was typing "Berlin" in the city textbox And the list of suggested cities is showing When the user selects a city (e.g., "Berlin, Germany") from the list
-    Then their city should be changed to that city (i.e., "Berlin, Germany")
-    And the user should receive a list of upcoming events in that city
+Scenario 2:<br> The user can unfold an event to view its full details<br>
 
-### FEATURE 2: SHOW/HIDE AN EVENT'S DETAILS
-As a user, I should be able to see see/hide event details so that I can better navigate throughout the various event and get information on the ones I want to know more about.
+>Given the event search results for a specific area<br>
+When the user selects "show details" for a specific event<br>
+Then the selected event's details will be fully displayed, spanning the entirety of the page<br>
 
-Scenario 1: Events are displayed in a condensed format by default
+Scenario 3:<br> The user can fold an event to conceal its details
 
--   Given that the user initiates a search for events occurring in their local area
+>Given that the user is viewing the expanded details of a specific event<br>
+When the user selects the "hide details" button<br>
+Then the expanded event details will be collapsed, returning the display to the original, condensed event format<br>
 
--   When the resulting events are displayed
+Feature 3: Specify Number of Events<br>
+As a user, I should be able to specify the number of events loaded on the page to facilitate smoother navigation within the app.<br>
 
--   Then these events are presented in a collapsed format by default
+Scenario 1:<br> When the user hasn't specified a number, 32 is the default number<br>
 
-Scenario 2: The user can unfold an event to view its full details
+>Given that the events are prepared for display on the page<br>
+When the user doesn't specify the desired number of events to view<br>
+Then the app will automatically load 32 events<br>
 
--   Given the event search results for a specific area 
+Scenario 2:<br> User can change the number of events they want to see<br>
 
--   When the user selects "show details" for a specific event
+>Given that the user initiates a search for local events<br>
+When the user initiates the event loading process<br>
+Then the user will have the opportunity to specify the quantity of events they wish to have displayed<br>
 
--   Then the selected event's details will be fully displayed, spanning the entirety of the page
+Feature 4:<br> Use the App When Offline<br>
+As a user, I should be able to use the app even while offline, ensuring I stay informed about the events I was viewing while I was online.<br>
 
-Scenario 3: The user can fold an event to conceal its details
+Scenario 1:<br> Show cached data when there's no internet connection.<br>
 
--   Given that the user is viewing the expanded details of a specific event
+>Given the situation where an internet connection is not present<br>
+Then the user is navigating the app<br>
+Then the app will display the cached data<br>
 
--   When the user selects the "hide details" button
+Scenario 2:<br> Show an error when the user changes the settings (city, time range)<br>
 
--   Then the expanded event details will be collapsed, returning the display to the original, condensed event format
+>Given the situation where an internet connection is not available<br>
+When the user attempts to modify their search parameters (based on city or event date/time)<br>
+Then the app will display an error message, notifying the user that this action is not possible due to the lack of an internet connection<br>
 
-### FEATURE 3: SPECIFY NUMBER OF EVENTS
-As a user, I should be able to specify the number of events loaded on the page so to facilitate smoother navigation within the app.
+Feature 5: Data Visualization<br>
+As a user, I should be able to visualize data from the app so that I can understand the amount of upcoming events occurring in a particular city and be able to filter by event type.<br>
 
--   Scenario 1: When user hasn't specified a number, 32 is the default number
-    - Given that the events are prepared for display on the page
-    - When the user doesn't specify the desired number of events to view
-    - Then the app will automatically load 32 events
+Scenario 1:<br> Show a chart with the number of upcoming events in each city<br>
 
--   Scenario 2: User can change the number of events they want to see
-    - Given that the user initiates a search for local event
-    - When the user initiates the event loading process
-    - Then the user will have the opportunity to specify the quantity of events they wish to have displayed
+>Given that the app is loaded<br>
+When the user views the event listings<br>
+Then the app will display a chart that indicates the quantity of upcoming events in each city, categorized by topic.<br>
 
-### FEATURE 4: USE THE APP WHEN OFFLINE
-As a user, I should be able to use the app even while offline, ensuring I stay informed about the events I was viewing while I was online.
+## **Backend - Serverless Functions**
+The Meet App utilizes serverless functions written in Node.js and Express. These serverless functions are hosted on AWS Lambda and are responsible for handling the backend logic. They communicate with the Google Calendar API to fetch event data based on user requests. The use of serverless functions ensures scalability, cost optimization, and streamlined development for a smooth user experience.
 
--   Scenario 1: Show cached data when there's no internet connection.
-    - Given the situation where an internet connection is not present
-    - Then the user is navigating the app
-    - Then the app will display the cached data
+## **Frontend and Backend (DataBase)**
+The frontend of the Meet App is written with JavaScript and React, using the Create-React-App (CRA) framework. The frontend is responsible for displaying the user interface and interacting with the user.<br>
 
--   Scenario 2: Show error when user changes the settings (city, time range)
-    - Given the situation where an internet connection is not available
-    - When the user attempts to modify their search parameters (based on city or event date/time)
-    - Then the app will display an error message, notifying the user that this action is not possible due to the lack of an internet connection
+The backend of the Meet App is written with **Node.js** and **Express**, hosting **serverless functions** on **AWS Lambda**. The backend communicates with the **Google Calendar API** to fetch event data.
 
-### FEATURE 5: DATA VISUALIZATION
-As a user, I should be able to visualize data from the app so that I can understand the amount of upcoming events occurring in a particular city and be able to filter by event type.
-
--   Scenario 1: Show a chart with the number of upcoming events in each city
-    - Given that the app is loaded
-    - When the user views the event listings
-    - Then the app will display a chart that indicates the quantity of upcoming events in each city, categorized by topic.
-
-## Frontend:
-Written with JavaScript/React; hosted on Github Pages
-
-## Backend:
-Written with Node/Express and Lambda finctions (FaaS); hosted on AWS
-
-## Backend (DataBase):
-Google Calendar API
-
-## How this app uses serverless functions:
-In the Meet app, serverless functions written in Node.js and Express will handle the backend logic. Hosted on AWS Lambda, these functions will communicate with the Google Calendar API to fetch event data based on user requests. This approach ensures scalability, cost optimization, and streamlined development for a smooth user experience.
-
-### FEATURE 1: FILTER EVENTS BY CITY
-Serverless functions will help users filter events by city. When users open the app, the serverless function will display a list of all upcoming events. As users type in the city textbox, the serverless function will show suggestions that match their input. When users select a city from the suggestion list, the serverless function will update the city and show a list of upcoming events in that selected city.
-
-### FEATURE 2: SHOW/HIDE AN EVENT'S DETAILS
-Serverless functions will handle displaying and hiding event details. By default, events will be shown in a condensed format. When users choose to view event details, the serverless function will expand and display the full information. If users want to hide the details, the serverless function will collapse the event to its condensed format.
-
-### FEATURE 3: SPECIFY NUMBER OF EVENTS
-Serverless functions will allow users to specify the number of events to be loaded on the page. The default number of events displayed will be 32. When users initiate the event loading process, the serverless function will provide an option for users to specify the desired quantity of events they want to see.
-
-### FEATURE 4: USE THE APP WHEN OFFLINE
-Serverless functions will enable offline app usage. When there is no internet connection, the serverless function will display cached data, allowing users to navigate and view the previously accessed information. If users attempt to modify search parameters without an internet connection, the serverless function will show an error message indicating that this action is not possible without an internet connection.
-
-### FEATURE 5: DATA VISUALIZATION
-Serverless functions will support data visualization in the Meet app. The app will display a chart that shows the number of upcoming events in each city, categorized by topic. This visual representation helps users understand and explore event quantities in different cities.
+## **Conclusion**
+The Meet App provides users with a seamless experience in discovering upcoming events for Full-Stack Developers in various cities. With features like city-based event filtering, event details display, specifying the number of events, offline app usage, and data visualization, the Meet App offers a comprehensive solution for staying informed about exciting tech events.
